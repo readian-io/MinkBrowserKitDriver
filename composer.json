@@ -22,7 +22,7 @@
     },
 
     "require-dev": {
-        "mink/driver-testsuite": "dev-master",
+        "friends-of-behat/mink-driver-testsuite": "dev-master",
         "symfony/http-kernel": "^4.4|^5.0"
     },
 

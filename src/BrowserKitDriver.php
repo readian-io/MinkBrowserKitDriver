@@ -12,7 +12,7 @@ namespace Behat\Mink\Driver;
 
 use Behat\Mink\Exception\DriverException;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
-use Symfony\Component\BrowserKit\Client;
+use Symfony\Component\BrowserKit\AbstractBrowser;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\BrowserKit\Exception\BadMethodCallException;
 use Symfony\Component\BrowserKit\Response;
@@ -23,7 +23,7 @@ use Symfony\Component\DomCrawler\Field\FormField;
 use Symfony\Component\DomCrawler\Field\InputFormField;
 use Symfony\Component\DomCrawler\Field\TextareaFormField;
 use Symfony\Component\DomCrawler\Form;
-use Symfony\Component\HttpKernel\Client as HttpKernelClient;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * Symfony2 BrowserKit driver.
@@ -46,15 +46,15 @@ class BrowserKitDriver extends CoreDriver
     /**
      * Initializes BrowserKit driver.
      *
-     * @param Client      $client  BrowserKit client instance
+     * @param AbstractBrowser      $client  BrowserKit client instance
      * @param string|null $baseUrl Base URL for HttpKernel clients
      */
-    public function __construct(Client $client, $baseUrl = null)
+    public function __construct(AbstractBrowser $client, $baseUrl = null)
     {
         $this->client = $client;
         $this->client->followRedirects(true);
 
-        if ($baseUrl !== null && $client instanceof HttpKernelClient) {
+        if ($baseUrl !== null && $client instanceof HttpKernelBrowser) {
             $client->setServerParameter('SCRIPT_FILENAME', parse_url($baseUrl, PHP_URL_PATH));
         }
     }
@@ -62,7 +62,7 @@ class BrowserKitDriver extends CoreDriver
     /**
      * Returns BrowserKit HTTP client instance.
      *
-     * @return Client
+     * @return AbstractBrowser
      */
     public function getClient()
     {
@@ -874,9 +874,13 @@ class BrowserKitDriver extends CoreDriver
      */
     private function getCrawler()
     {
-        $crawler = $this->client->getCrawler();
+        try {
+            $crawler = $this->client->getCrawler();
 
-        if (null === $crawler) {
+            if (null === $crawler) {
+                throw new DriverException('Unable to access the response content before visiting a page');
+            }
+        } catch (BadMethodCallException $exception) {
             throw new DriverException('Unable to access the response content before visiting a page');
         }
 

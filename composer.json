@@ -26,6 +26,10 @@
         "symfony/http-kernel": "^4.4|^5.0"
     },
 
+    "replace": {
+        "behat/mink-browserkit-driver": "self.version"
+    },
+
     "autoload": {
         "psr-4": {
             "Behat\\Mink\\Driver\\": "src/"

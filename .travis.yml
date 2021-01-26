@@ -6,10 +6,12 @@ php:
   - 7.2
   - 7.3
   - 7.4
+  - 8.0
 
 env:
   - SYMFONY_VERSION=4.4.*
   - SYMFONY_VERSION=5.0.*
+  - SYMFONY_VERSION=5.2.*
 
 cache:
   directories:
@@ -25,7 +27,7 @@ install:
 
   - vendor/bin/simple-phpunit install
 
-script: vendor/bin/simple-phpunit -v --coverage-clover=coverage.clover
+script: XDEBUG_MODE=coverage vendor/bin/simple-phpunit -v --coverage-clover=coverage.clover
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar

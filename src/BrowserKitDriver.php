@@ -32,16 +32,16 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 class BrowserKitDriver extends CoreDriver
 {
-    private $client;
+    private AbstractBrowser $client;
 
     /**
      * @var Form[]
      */
-    private $forms = array();
-    private $serverParameters = array();
-    private $started = false;
-    private $removeScriptFromUrl = false;
-    private $removeHostFromUrl = false;
+    private array $forms = array();
+    private array $serverParameters = array();
+    private bool $started = false;
+    private bool $removeScriptFromUrl = false;
+    private bool $removeHostFromUrl = false;
 
     /**
      * Initializes BrowserKit driver.

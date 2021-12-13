@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 class BrowserKitConfig extends AbstractConfig
 {
-    public static function getInstance()
+    public static function getInstance(): BrowserKitConfig
     {
         return new self();
     }
@@ -26,12 +26,12 @@ class BrowserKitConfig extends AbstractConfig
     /**
      * {@inheritdoc}
      */
-    public function getWebFixturesUrl()
+    public function getWebFixturesUrl(): string
     {
         return 'http://localhost';
     }
 
-    protected function supportsJs()
+    protected function supportsJs(): bool
     {
         return false;
     }

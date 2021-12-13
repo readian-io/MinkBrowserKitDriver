@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit colors="true" bootstrap="vendor/autoload.php">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         colors="true"
+         bootstrap="vendor/autoload.php">
     <php>
         <var name="driver_config_factory" value="Behat\Mink\Tests\Driver\BrowserKitConfig::getInstance" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=1" />
     </php>
 
     <testsuites>
         <testsuite name="Driver test suite">
             <directory>tests</directory>
-            <directory>vendor/mink/driver-testsuite/tests/Basic</directory>
-            <directory>vendor/mink/driver-testsuite/tests/Form</directory>
+            <directory>vendor/friends-of-behat/mink-driver-testsuite/tests/Basic</directory>
+            <directory>vendor/friends-of-behat/mink-driver-testsuite/tests/Form</directory>
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
+    <coverage>
+        <include>
             <directory>./src</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
 </phpunit>
